@@ -1,11 +1,13 @@
 import 'package:flutter_test_app/bar.dart';
+import 'package:flutter_test_app/new_dependency.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
 class Foo {
-  final Bar bar;
+  Foo(this.bar, this.newDependency);
 
-  Foo(this.bar);
+  final Bar bar;
+  final ChangedNewDependency newDependency;
 
   String get fooBar => '$foo${bar.bar}';
 

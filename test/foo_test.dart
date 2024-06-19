@@ -1,13 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_test_app/bar.dart';
 import 'package:flutter_test_app/foo.dart';
+import 'package:flutter_test_app/new_dependency.dart';
 
 void main() {
   group(Foo, () {
     late Foo foo;
 
     setUp(() {
-      foo = Foo(Bar());
+      foo = Foo(Bar(), ChangedNewDependency());
     });
 
     group('foo', () {
