@@ -1,0 +1,53 @@
+name: Last checks before merging to main
+
+on:
+  pull_request:
+    types:
+      - auto_merge_enabled
+    branches:
+      - main
+
+jobs:
+  run_build_runner:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set env.FLUTTER_VERSION from fvm
+      uses: kuhnroyal/flutter-fvm-config-action@34c3905bc939a4ff9d9cb07d5a977493fa73b2aa
+      with:
+        path: '.fvmrc'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: ${{ env.FLUTTER_CHANNEL }}
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Run build_runner
+      run: flutter pub run build_runner build --delete-conflicting-outputs
+
+    - name: Check for changes
+      id: git_diff
+      run: |
+        git config user.email "github_ci@example.com"
+        git config user.name "Github Actions"
+        git add .
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          echo "changed=false" >> $GITHUB_ENV
+        else
+          echo "Changes detected"
+          echo "changed=true" >> $GITHUB_ENV
+        fi
+
+    - name: Commit and push changes
+      if: env.changed == 'true'
+      run: |
+        git commit -m "chore: Regenerate files with build_runner"
+        git push origin HEAD:${{ github.head_ref }}
