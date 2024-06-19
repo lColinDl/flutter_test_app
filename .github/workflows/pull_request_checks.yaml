@@ -1,0 +1,81 @@
+name: Pull Request checks
+
+on:
+  pull_request:
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set env.FLUTTER_VERSION from fvm
+        uses: kuhnroyal/flutter-fvm-config-action@34c3905bc939a4ff9d9cb07d5a977493fa73b2aa
+        with:
+          path: '.fvmrc'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Code formatting
+        run: dart format . --set-exit-if-changed
+
+  analyzer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set env.FLUTTER_VERSION from fvm
+        uses: kuhnroyal/flutter-fvm-config-action@34c3905bc939a4ff9d9cb07d5a977493fa73b2aa
+        with:
+          path: '.fvmrc'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Dart Analyzer
+        uses: invertase/github-action-dart-analyzer@v3.0.0
+        with:
+          fatal-infos: true
+          fatal-warnings: true
+          annotate: true
+
+  unit_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set env.FLUTTER_VERSION from fvm
+        uses: kuhnroyal/flutter-fvm-config-action@34c3905bc939a4ff9d9cb07d5a977493fa73b2aa
+        with:
+          path: '.fvmrc'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Unit tests
+        run: flutter test
