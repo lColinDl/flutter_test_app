@@ -7,7 +7,7 @@ class Foo {
   Foo(this.bar, this.newDependency);
 
   final Bar bar;
-  final NewDependency newDependency;
+  final ChangedNewDependency newDependency;
 
   String get fooBar => '$foo${bar.bar}';
 

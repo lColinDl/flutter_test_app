@@ -25,11 +25,11 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.singleton<_i3.NewDependency>(() => _i3.NewDependency());
+    gh.singleton<_i3.ChangedNewDependency>(() => _i3.ChangedNewDependency());
     gh.singleton<_i4.Bar>(() => _i4.Bar());
     gh.singleton<_i5.Foo>(() => _i5.Foo(
           gh<_i4.Bar>(),
-          gh<_i3.NewDependency>(),
+          gh<_i3.ChangedNewDependency>(),
         ));
     return this;
   }

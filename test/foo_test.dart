@@ -8,7 +8,7 @@ void main() {
     late Foo foo;
 
     setUp(() {
-      foo = Foo(Bar(), NewDependency());
+      foo = Foo(Bar(), ChangedNewDependency());
     });
 
     group('foo', () {

@@ -1,6 +1,4 @@
 import 'package:injectable/injectable.dart';
 
 @singleton
-class NewDependency {
-
-}
+class ChangedNewDependency {}
