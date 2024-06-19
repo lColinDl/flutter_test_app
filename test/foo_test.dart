@@ -4,9 +4,20 @@ import 'package:flutter_test_app/foo.dart';
 
 void main() {
   group(Foo, () {
+    late Foo foo;
+
+    setUp(() {
+      foo = Foo(Bar());
+    });
+
+    group('foo', () {
+      test('should return "foo"', () {
+        expect(foo.foo, 'foo');
+      });
+    });
+
     group('fooBar', () {
       test('should return "foobar"', () {
-        final foo = Foo(Bar());
         expect(foo.fooBar, 'foobar');
       });
     });
