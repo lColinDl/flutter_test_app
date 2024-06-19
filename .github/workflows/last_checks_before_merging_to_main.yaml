@@ -30,7 +30,7 @@ jobs:
       run: flutter pub get
 
     - name: Run build_runner
-      run: flutter pub run build_runner build --delete-conflicting-outputs
+      run: dart run build_runner build -d
 
     - name: Check for changes
       id: git_diff
