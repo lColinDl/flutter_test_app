@@ -1,5 +1,5 @@
 import 'package:flutter_test_app/bar.dart';
-import 'package:flutter_test_app/new_dependency.dart';
+import 'package:flutter_test_app/changed_new_dependency.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
